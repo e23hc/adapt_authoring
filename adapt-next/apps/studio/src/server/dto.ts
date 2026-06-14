@@ -22,6 +22,7 @@ export const updateCourseSchema = z.object({
   displayTitle: z.string().nullable().optional(),
   body: z.string().nullable().optional(),
   classes: z.string().optional(),
+  tags: z.array(z.string()).optional(),
 });
 
 export const updateConfigSchema = z.object({
@@ -29,6 +30,16 @@ export const updateConfigSchema = z.object({
   menu: z.string().optional(),
   defaultLanguage: z.string().optional(),
   defaultDirection: z.enum(["ltr", "rtl"]).optional(),
+  themeSettings: z.record(z.unknown()).optional(),
+});
+
+export const updateAssetSchema = z.object({
+  title: z.string().optional(),
+  tags: z.array(z.string()).optional(),
+});
+
+export const createTagSchema = z.object({
+  name: z.string().min(1),
 });
 
 export const createNodeSchema = z.object({

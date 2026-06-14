@@ -3,6 +3,7 @@ node_modules/
 dist/
 out/
 *.tsbuildinfo
+data/
 .env
 .env.local
 .DS_Store

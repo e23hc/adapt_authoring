@@ -15,6 +15,8 @@ model User {
   name      String?
   createdAt DateTime @default(now())
   courses   Course[]
+  assets    Asset[]
+  tags      Tag[]
 }
 
 model Course {
@@ -23,7 +25,6 @@ model Course {
   displayTitle String?
   body         String?
   classes      String   @default("")
-  tags         String[] @default([])
   extensions   Json     @default("{}")
   ownerId      String
   owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
@@ -35,6 +36,7 @@ model Course {
   articles       Article[]
   blocks         Block[]
   components     Component[]
+  tags           CourseTag[]
 
   @@index([ownerId])
 }
@@ -169,4 +171,60 @@ model Component {
   @@index([courseId])
   @@index([blockId, sortOrder])
   @@index([component])
+}
+
+// Owner-scoped, reusable across courses. Component fields store the asset `url` directly.
+model Asset {
+  id           String   @id @default(cuid())
+  ownerId      String
+  owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  title        String
+  filename     String
+  storageKey   String
+  url          String
+  mimeType     String
+  assetType    String // image | video | audio | document
+  size         Int      @default(0)
+  width        Int?
+  height       Int?
+  thumbnailKey String?
+  thumbnailUrl String?
+  metadata     Json     @default("{}")
+  tags         AssetTag[]
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([ownerId])
+  @@index([assetType])
+}
+
+model Tag {
+  id      String      @id @default(cuid())
+  ownerId String
+  owner   User        @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name    String
+  courses CourseTag[]
+  assets  AssetTag[]
+
+  @@unique([ownerId, name])
+}
+
+model CourseTag {
+  courseId String
+  course   Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  tagId    String
+  tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([courseId, tagId])
+  @@index([tagId])
+}
+
+model AssetTag {
+  assetId String
+  asset   Asset  @relation(fields: [assetId], references: [id], onDelete: Cascade)
+  tagId   String
+  tag     Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([assetId, tagId])
+  @@index([tagId])
 }

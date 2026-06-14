@@ -77,6 +77,9 @@ importers:
       react-hook-form:
         specifier: ^7.54.2
         version: 7.79.0(react@19.2.7)
+      sharp:
+        specifier: ^0.34.5
+        version: 0.34.5
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.1
@@ -2048,8 +2051,7 @@ snapshots:
     dependencies:
       react-hook-form: 7.79.0(react@19.2.7)
 
-  '@img/colour@1.1.0':
-    optional: true
+  '@img/colour@1.1.0': {}
 
   '@img/sharp-darwin-arm64@0.34.5':
     optionalDependencies:
@@ -2632,8 +2634,7 @@ snapshots:
 
   destr@2.0.5: {}
 
-  detect-libc@2.1.2:
-    optional: true
+  detect-libc@2.1.2: {}
 
   didyoumean@1.2.2: {}
 
@@ -3176,8 +3177,7 @@ snapshots:
 
   scheduler@0.27.0: {}
 
-  semver@7.8.4:
-    optional: true
+  semver@7.8.4: {}
 
   sharp@0.34.5:
     dependencies:
@@ -3209,7 +3209,6 @@ snapshots:
       '@img/sharp-win32-arm64': 0.34.5
       '@img/sharp-win32-ia32': 0.34.5
       '@img/sharp-win32-x64': 0.34.5
-    optional: true
 
   source-map-js@1.2.1: {}
 
