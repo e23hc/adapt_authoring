@@ -1,0 +1,6 @@
+{
+  "_items": [
+    { "title": "Item one", "body": "<p>First panel content.</p>" },
+    { "title": "Item two", "body": "<p>Second panel content.</p>" }
+  ]
+}

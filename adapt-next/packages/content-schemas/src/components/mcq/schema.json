@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adapt-next:component/mcq",
+  "title": "Multiple Choice",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_items"],
+  "properties": {
+    "instruction": {
+      "type": "string",
+      "title": "Instruction",
+      "default": "Choose one or more options.",
+      "x-ui": { "widget": "textarea" }
+    },
+    "_isRandom": {
+      "type": "boolean",
+      "title": "Randomise options",
+      "default": false,
+      "isSetting": true,
+      "x-ui": { "widget": "boolean" }
+    },
+    "_selectable": {
+      "type": "integer",
+      "title": "Number selectable",
+      "minimum": 1,
+      "default": 1,
+      "isSetting": true,
+      "x-ui": { "widget": "number" }
+    },
+    "_items": {
+      "type": "array",
+      "title": "Options",
+      "minItems": 2,
+      "x-ui": { "widget": "list", "itemLabel": "text" },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["text"],
+        "properties": {
+          "text": {
+            "type": "string",
+            "title": "Option text",
+            "default": "",
+            "x-ui": { "widget": "text" }
+          },
+          "_shouldBeSelected": {
+            "type": "boolean",
+            "title": "Correct?",
+            "default": false,
+            "x-ui": { "widget": "boolean" }
+          },
+          "feedback": {
+            "type": "string",
+            "title": "Option feedback",
+            "default": "",
+            "x-ui": { "widget": "textarea" }
+          }
+        }
+      }
+    },
+    "_feedback": {
+      "type": "object",
+      "title": "Feedback",
+      "x-ui": { "widget": "object", "collapsible": true },
+      "properties": {
+        "correct": {
+          "type": "string",
+          "title": "Correct",
+          "default": "Well done!",
+          "x-ui": { "widget": "textarea" }
+        },
+        "incorrect": {
+          "type": "string",
+          "title": "Incorrect",
+          "default": "Have another go.",
+          "x-ui": { "widget": "textarea" }
+        }
+      }
+    }
+  }
+}

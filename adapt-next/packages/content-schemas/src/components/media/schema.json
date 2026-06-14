@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adapt-next:component/media",
+  "title": "Media",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "_media": {
+      "type": "object",
+      "title": "Media",
+      "x-ui": { "widget": "object" },
+      "properties": {
+        "source": {
+          "type": "string",
+          "title": "Source URL",
+          "default": "",
+          "x-ui": { "widget": "text", "help": "URL to an mp4 video or audio file." }
+        },
+        "poster": {
+          "type": "string",
+          "title": "Poster image",
+          "default": "",
+          "x-ui": { "widget": "asset" }
+        },
+        "type": {
+          "type": "string",
+          "title": "Type",
+          "default": "video",
+          "enum": ["video", "audio"],
+          "x-ui": { "widget": "select" }
+        }
+      }
+    }
+  }
+}

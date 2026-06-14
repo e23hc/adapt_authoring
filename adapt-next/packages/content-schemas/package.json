@@ -1,0 +1,29 @@
+{
+  "name": "@adapt-next/content-schemas",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./validate": {
+      "types": "./src/validate.ts",
+      "default": "./src/validate.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts src/validate.ts --format esm --dts --clean",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.6",
+    "typescript": "^5.7.3"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adapt-next:component/graphic",
+  "title": "Graphic",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "_graphic": {
+      "type": "object",
+      "title": "Image",
+      "x-ui": { "widget": "object" },
+      "properties": {
+        "src": {
+          "type": "string",
+          "title": "Image",
+          "default": "",
+          "x-ui": { "widget": "asset", "help": "Select or paste an image URL." }
+        },
+        "alt": {
+          "type": "string",
+          "title": "Alt text",
+          "default": "",
+          "x-ui": { "widget": "text", "help": "Describe the image for screen readers." }
+        },
+        "attribution": {
+          "type": "string",
+          "title": "Attribution",
+          "default": "",
+          "x-ui": { "widget": "text" }
+        }
+      }
+    }
+  }
+}

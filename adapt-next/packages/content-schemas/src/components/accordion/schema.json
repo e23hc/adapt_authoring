@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "adapt-next:component/accordion",
+  "title": "Accordion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["_items"],
+  "properties": {
+    "_items": {
+      "type": "array",
+      "title": "Items",
+      "minItems": 1,
+      "x-ui": { "widget": "list", "itemLabel": "title" },
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "title": "Heading",
+            "default": "",
+            "x-ui": { "widget": "text" }
+          },
+          "body": {
+            "type": "string",
+            "title": "Body",
+            "default": "",
+            "x-ui": { "widget": "richtext" }
+          }
+        }
+      }
+    }
+  }
+}

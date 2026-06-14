@@ -1,0 +1,35 @@
+/* Minimal, namespaced base styles for the renderer. Hosts can override freely. */
+.an-course { line-height: 1.55; }
+.an-page { margin: 0 0 2.5rem; }
+.an-page__title { font-size: 1.6rem; font-weight: 700; margin: 0 0 .75rem; }
+.an-article { margin: 0 0 1.5rem; }
+.an-block { margin: 0 0 1.25rem; }
+.an-block__components { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+.an-block__components:has(.an-layout--left):has(.an-layout--right) { grid-template-columns: 1fr 1fr; }
+.an-component__title { font-size: 1.1rem; font-weight: 600; margin: 0 0 .4rem; }
+.an-prose :where(p) { margin: 0 0 .75rem; }
+.an-graphic__img { max-width: 100%; height: auto; border-radius: .5rem; }
+.an-graphic__attribution { font-size: .8rem; opacity: .7; }
+.an-media__video, .an-media__audio { width: 100%; border-radius: .5rem; }
+.an-placeholder {
+  padding: 1rem; border: 1px dashed currentColor; border-radius: .5rem;
+  opacity: .55; font-size: .9rem; text-align: center;
+}
+.an-mcq__items { list-style: none; padding: 0; margin: .5rem 0; display: grid; gap: .4rem; }
+.an-mcq__item label { display: flex; gap: .5rem; align-items: center; cursor: pointer; }
+.an-mcq__item[data-state="correct"] { color: #15803d; font-weight: 600; }
+.an-mcq__item[data-state="incorrect"] { color: #b91c1c; }
+.an-mcq__feedback[data-correct="true"] { color: #15803d; }
+.an-mcq__feedback[data-correct="false"] { color: #b91c1c; }
+.an-btn {
+  margin-top: .5rem; padding: .4rem .9rem; border-radius: .4rem;
+  border: 1px solid currentColor; background: transparent; cursor: pointer;
+}
+.an-btn:disabled { opacity: .5; cursor: not-allowed; }
+.an-accordion__item { border: 1px solid #e5e7eb; border-radius: .4rem; margin-bottom: .4rem; }
+.an-accordion__header {
+  width: 100%; text-align: left; padding: .6rem .8rem; background: #f9fafb;
+  border: 0; cursor: pointer; font-weight: 600;
+}
+.an-accordion__body { padding: .6rem .8rem; }
+.an-component--unknown { padding: .75rem; border: 1px dashed #f59e0b; color: #b45309; border-radius: .4rem; }

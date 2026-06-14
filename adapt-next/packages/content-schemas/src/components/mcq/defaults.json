@@ -1,0 +1,10 @@
+{
+  "instruction": "Choose one or more options.",
+  "_isRandom": false,
+  "_selectable": 1,
+  "_items": [
+    { "text": "Option 1", "_shouldBeSelected": true, "feedback": "" },
+    { "text": "Option 2", "_shouldBeSelected": false, "feedback": "" }
+  ],
+  "_feedback": { "correct": "Well done!", "incorrect": "Have another go." }
+}

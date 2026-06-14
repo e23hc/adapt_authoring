@@ -1,0 +1,172 @@
+// Adjacency-list content tree mirroring the legacy Adapt collections.
+// Stable fields are columns; open-ended/plugin data is JSONB (`properties`, `extensions`, `settings`).
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  createdAt DateTime @default(now())
+  courses   Course[]
+}
+
+model Course {
+  id           String   @id @default(cuid())
+  title        String
+  displayTitle String?
+  body         String?
+  classes      String   @default("")
+  tags         String[] @default([])
+  extensions   Json     @default("{}")
+  ownerId      String
+  owner        User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  config         CourseConfig?
+  contentObjects ContentObject[]
+  articles       Article[]
+  blocks         Block[]
+  components     Component[]
+
+  @@index([ownerId])
+}
+
+model CourseConfig {
+  id                String @id @default(cuid())
+  courseId          String @unique
+  course            Course @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  theme             String @default("adapt-contrib-vanilla")
+  menu              String @default("adapt-contrib-boxMenu")
+  defaultLanguage   String @default("en")
+  defaultDirection  String @default("ltr")
+  settings          Json   @default("{}")
+  enabledComponents Json   @default("[]")
+  enabledExtensions Json   @default("[]")
+  themeSettings     Json   @default("{}")
+  menuSettings      Json   @default("{}")
+}
+
+enum ContentObjectKind {
+  menu
+  page
+}
+
+model ContentObject {
+  id             String            @id @default(cuid())
+  courseId       String
+  course         Course            @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  parentObjectId String?
+  parent         ContentObject?    @relation("CoTree", fields: [parentObjectId], references: [id], onDelete: Cascade)
+  children       ContentObject[]   @relation("CoTree")
+  kind           ContentObjectKind @default(page)
+  sortOrder      Int               @default(1)
+
+  title        String
+  displayTitle String?
+  body         String?
+  classes      String  @default("")
+  isOptional   Boolean @default(false)
+  isAvailable  Boolean @default(true)
+  graphic      Json?
+  extensions   Json    @default("{}")
+
+  articles Article[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@index([parentObjectId, sortOrder])
+}
+
+model Article {
+  id       String        @id @default(cuid())
+  courseId String
+  course   Course        @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  pageId   String
+  page     ContentObject @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  sortOrder Int          @default(1)
+
+  title        String
+  displayTitle String?
+  body         String?
+  classes      String  @default("")
+  isOptional   Boolean @default(false)
+  isAvailable  Boolean @default(true)
+  extensions   Json    @default("{}")
+
+  blocks Block[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@index([pageId, sortOrder])
+}
+
+model Block {
+  id        String  @id @default(cuid())
+  courseId  String
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  articleId String
+  article   Article @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  sortOrder Int     @default(1)
+
+  title         String
+  displayTitle  String?
+  body          String?
+  classes       String  @default("")
+  isOptional    Boolean @default(false)
+  isAvailable   Boolean @default(true)
+  layoutOptions Json    @default("[]")
+  extensions    Json    @default("{}")
+
+  components Component[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@index([articleId, sortOrder])
+}
+
+enum ComponentLayout {
+  full
+  left
+  right
+}
+
+model Component {
+  id        String  @id @default(cuid())
+  courseId  String
+  course    Course  @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  blockId   String
+  block     Block   @relation(fields: [blockId], references: [id], onDelete: Cascade)
+  sortOrder Int     @default(1)
+
+  component    String // the `_component` key, e.g. "mcq" — source of truth for render/validation
+  layout       ComponentLayout @default(full)
+  title        String
+  displayTitle String?
+  body         String?
+  classes      String          @default("")
+  isOptional   Boolean         @default(false)
+  isAvailable  Boolean         @default(true)
+  properties   Json            @default("{}")
+  extensions   Json            @default("{}")
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([courseId])
+  @@index([blockId, sortOrder])
+  @@index([component])
+}

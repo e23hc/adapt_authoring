@@ -1,0 +1,33 @@
+{
+  "name": "adapt-next",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Modern Next.js authoring tool (Adapt-inspired) — schema-driven course editor + portable renderer",
+  "scripts": {
+    "dev": "pnpm --filter @adapt-next/studio dev",
+    "build": "pnpm -r build",
+    "db:migrate": "pnpm --filter @adapt-next/studio exec prisma migrate dev",
+    "db:generate": "pnpm --filter @adapt-next/studio exec prisma generate",
+    "db:seed": "pnpm --filter @adapt-next/studio db:seed",
+    "db:studio": "pnpm --filter @adapt-next/studio exec prisma studio",
+    "test": "pnpm -r --if-present test",
+    "lint": "pnpm -r --if-present lint"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "packageManager": "pnpm@10.33.0",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "prisma",
+      "esbuild",
+      "sharp"
+    ]
+  }
+}
